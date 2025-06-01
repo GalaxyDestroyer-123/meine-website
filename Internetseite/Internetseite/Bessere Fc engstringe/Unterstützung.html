@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC Engstringen - Offizieller Webauftritt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #ffffff;
+            --accent: #e11d48;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background-color: rgba(30, 58, 138, 0.9);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            padding: 12px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hero {
+            height: 100vh;
+            background: url('/api/placeholder/1900/1000') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: var(--secondary);
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent);
+            color: var(--secondary);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: #be123c;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            height: 3px;
+            width: 60px;
+            background-color: var(--accent);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about {
+            background-color: var(--light);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 40px;
+        }
+
+        .about-text h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #4b5563;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            height: 400px;
+        }
+
+        .about-image-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #e5e7eb;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .team {
+            background-color: var(--dark);
+            color: var(--secondary);
+            background-attachment: fixed;
+            background-image: url('/api/placeholder/1900/1000');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .team:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+        }
+
+        .team .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .team .section-title h2 {
+            color: var(--secondary);
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+
+        .team-image {
+            height: 200px;
+            background-color: #e5e7eb;
+        }
+
+        .team-info {
+            padding: 20px;
+        }
+
+        .team-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+
+        .team-info p {
+            color: #d1d5db;
+        }
+
+        .news {
+            background-color: #f3f4f6;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .news-image {
+            height: 200px;
+            background-color: #e5e7eb;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .news-excerpt {
+            color: #4b5563;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .news-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .news-link:hover {
+            color: #be123c;
+        }
+
+        .contact {
+            background-color: var(--light);
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .contact-details {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            margin-right: 15px;
+        }
+
+        .contact-text {
+            color: #4b5563;
+        }
+
+        .contact-text strong {
+            display: block;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .footer {
+            background-color: var(--dark);
+            color: var(--secondary);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .footer-column p {
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background-color: var(--accent);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+                color: var(--secondary);
+                font-size: 24px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 20px 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content, .contact-content {
+                flex-direction: column;
+            }
+
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <div class="logo-img">FC</div>
+                    FC Engstringen
+                </div>
+                <div class="mobile-menu">☰</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">Über uns</a></li>
+                    <li><a href="#teams">Mannschaften</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Willkommen beim FC Engstringen</h1>
+                <p>Ihr lokaler Fussballverein mit Tradition und Leidenschaft seit 1952. Entdecken Sie unsere Mannschaften, Trainingszeiten und kommende Veranstaltungen.</p>
+                <a href="#teams" class="btn">Unsere Teams</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Über uns</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Tradition und Gemeinschaft seit über 70 Jahren</h3>
+                    <p>Der FC Engstringen wurde im Jahr 1952 gegründet und ist seitdem ein wichtiger Teil der lokalen Sportkultur. Unser Verein steht für Fairplay, Teamgeist und sportliche Entwicklung für alle Altersklassen.</p>
+                    <p>Mit unserem modernen Sportzentrum, qualifizierten Trainern und einem engagierten Vereinsvorstand bieten wir optimale Bedingungen für Hobby- und ambitionierte Fussballspieler jeden Alters. Über 300 aktive Mitglieder trainieren und spielen regelmässig in unseren verschiedenen Mannschaften.</p>
+                    <p>Neben dem Spielbetrieb ist uns auch das Vereinsleben wichtig. Regelmässige Events, Feiern und gemeinsame Aktivitäten stärken den Zusammenhalt in unserer Fussballfamilie.</p>
+                    <a href="#contact" class="btn">Mitglied werden</a>
+                </div>
+                <div class="about-image">
+                    <img src="/Bilder/Blau-weiss-Gestreift.jpeg" alt="FC Engstringen" class="about-image-placeholder">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section team" id="teams">
+        <div class="container">
+            <div class="section-title">
+                <h2>Unsere Mannschaften</h2>
+            </div>
+            <div class="teams-grid">
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="/Bilder/erst-Manschaft.jpeg" alt="1. Mannschaft">
+                    </div>
+                    <div class="team-info">
+                        <h3>1. Mannschaft</h3>
+                        <p>3. Liga Regionalliga</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="/api/placeholder/400/200" alt="2. Mannschaft">
+                    </div>
+                    <div class="team-info">
+                        <h3>2. Mannschaft</h3>
+                        <p>4. Liga Regional</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="/api/placeholder/400/200" alt="Junioren A">
+                    </div>
+                    <div class="team-info">
+                        <h3>Junioren A</h3>
+                        <p>U19 Promotion</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="/api/placeholder/400/200" alt="Junioren B">
+                    </div>
+                    <div class="team-info">
+                        <h3>Junioren B</h3>
+                        <p>U17 Regional</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="/api/placeholder/400/200" alt="Junioren C">
+                    </div>
+                    <div class="team-info">
+                        <h3>Junioren C</h3>
+                        <p>U15 Regional</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="/api/placeholder/400/200" alt="Junioren D">
+                    </div>
+                    <div class="team-info">
+                        <h3>Junioren D</h3>
+                        <p>U13 Promotion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section news" id="news">
+        <div class="container">
+            <div class="section-title">
+                <h2>Aktuelle News</h2>
+            </div>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/200" alt="Saisonvorbereitung">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">15. April 2025</span>
+                        <h3 class="news-title">Erfolgreicher Start in die Rückrunde</h3>
+                        <p class="news-excerpt">Unsere 1. Mannschaft gewinnt das erste Spiel der Rückrunde mit 3:1 gegen den FC Dietikon und sichert sich wichtige Punkte im Aufstiegskampf.</p>
+                        <a href="#" class="news-link">Weiterlesen</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/200" alt="Jugendtraining">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">10. April 2025</span>
+                        <h3 class="news-title">Junioren C qualifizieren sich für das Regionalfinale</h3>
+                        <p class="news-excerpt">Unsere U15-Mannschaft hat sich mit einem überzeugenden 5:0 Sieg für das Regionalfinale des Schweizer Cups qualifiziert.</p>
+                        <a href="#" class="news-link">Weiterlesen</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="/api/placeholder/400/200" alt="Neuer Trainer">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">2. April 2025</span>
+                        <h3 class="news-title">Neuer Trainer für die 2. Mannschaft</h3>
+                        <p class="news-excerpt">Wir freuen uns, Marco Bürgler als neuen Trainer unserer 2. Mannschaft begrüssen zu dürfen. Mit seiner Erfahrung wird er unser Team verstärken.</p>
+                        <a href="#" class="news-link">Weiterlesen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kontakt</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>So erreichen Sie uns</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-text">
+                                <strong>Adresse</strong>
+                                Sportanlage Breiti<br>
+                                Breitistrasse 45<br>
+                                8955 Engstringen
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-text">
+                                <strong>Telefon</strong>
+                                +41 44 123 45 67
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">✉️</div>
+                            <div class="contact-text">
+                                <strong>E-Mail</strong>
+                                info@fc-engstringen.ch
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">⌚</div>
+                            <div class="contact-text">
+                                <strong>Bürozeiten</strong>
+                                Mo-Fr: 09:00 - 12:00 Uhr<br>
+                                Mi: 14:00 - 18:00 Uhr
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="E-Mail" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Betreff">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Ihre Nachricht" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <div class="footer-logo-img">FC</div>
+                        FC Engstringen
+                    </div>
+                    <p>Ihr lokaler Fussballverein mit Tradition und Leidenschaft. Seit 1952 ein wichtiger Teil der Gemeinde Engstringen.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">f</a>
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">📷</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Schnelllinks</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">Über uns</a></li>
+                        <li><a href="#teams">Mannschaften</a></li>
+                        <li><a href="#news">News</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Trainingszeiten</h3>
+                    <ul class="footer-links">
+                        <li>1. Mannschaft: Di & Do 19:30-21:00</li>
+                        <li>2. Mannschaft: Mo & Mi 19:30-21:00</li>
+                        <li>Junioren A: Mo & Do 18:00-19:30</li>
+                        <li>Junioren B: Di & Fr 18:00-19:30</li>
+                        <li>Junioren C & D: Mi 17:00-18:30</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 FC Engstringen. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Simple Parallax Effect for Team Section
+        window.addEventListener('scroll', function() {
+            const teamSection = document.querySelector('.team');
+            const scrollPosition = window.pageYOffset;
+            
+            // Calculate parallax effect
+            const yPos = scrollPosition * 0.3;
+            
+            // Apply the effect (move background slightly)
+            teamSection.style.backgroundPosition = 'center ' + yPos + 'px';
+        });
+    </script>
+</body>
+</html>
